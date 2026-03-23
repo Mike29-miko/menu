@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signature & Premium · Boissons & Entrées</title>
+  <!-- Parisienne for the grand title + Cormorant Garamond for the rest -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      background-image: url("images/back.png");
+      font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+      min-height: 100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:2rem 1.5rem;
+      position:relative;
+    }
+
+    body::after {
+      content:'';
+      position:fixed; top:0; left:0; right:0; bottom:0;
+      background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(0,0,0,0.3) 90%);
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .menu-card {
+      position: relative;
+      z-index: 2;
+      max-width: 1150px;
+      width: 100%;
+      background: #fcf7ef;
+      background-image: url('data:image/svg+xml;base64,...');
+      border-radius: 32px 32px 24px 24px;
+      box-shadow: 0 30px 50px -20px rgba(0,0,0,0.9),
+                  0 0 0 1px #cfb595 inset,
+                  0 0 0 3px #f0e5d8 inset,
+                  0 0 0 5px #8f7a60 inset;
+      padding: 2.8rem 2.5rem;
+    }
+
+    .menu-header { text-align:center; border-bottom:2px solid #c4a27a; padding-bottom:1.5rem; margin-bottom:2.3rem; }
+    .menu-header h1 {
+      font-family:'Parisienne', cursive;
+      font-size:4.2rem;
+      font-weight:400;
+      color:#4f3f2e;
+      text-shadow: 2px 2px 4px rgba(240,230,210,0.8), 3px 3px 8px rgba(100,70,40,0.2);
+      line-height:1.2;
+    }
+
+    .menu-grid { display:grid; grid-template-columns:1fr 1fr; gap:2.8rem; }
+
+    .section-title {
+      font-family:'Cormorant Garamond', serif;
+      font-size:2.4rem;
+      font-weight:600;
+      color:#7b5f40;
+      border-bottom:2px solid #d4b38c;
+      padding-bottom:0.4rem;
+      margin-bottom:0.1rem;
+      text-transform:uppercase;
+      letter-spacing:2.5px;
+    }
+
+    .subsection-title {
+      font-family:'Cormorant Garamond', serif;
+      font-size:1.7rem;
+      font-weight:400;
+      color:#7f6a50;
+      margin:0 0 1.2rem 0;
+      font-style:italic;
+      letter-spacing:0.5px;
+      border-left: none;
+      padding-left:0;
+    }
+
+    .menu-item {
+      margin-bottom:1.8rem;
+      border-left:3px solid #d4b38c;
+      padding-left:1.2rem;
+      transition: transform 0.15s ease;
+    }
+
+    .menu-item:hover { transform:translateX(5px); border-left-color:#b48d62; }
+
+    .item-row {
+      display:flex;
+      justify-content:space-between;
+      align-items:baseline;
+      flex-wrap:wrap;
+      gap:0.5rem 1rem;
+    }
+
+    .item-name a {
+      font-family:'Cormorant Garamond', serif;
+      font-size:1.8rem;
+      font-weight:600;
+      color:#3f3326;
+      letter-spacing:0.3px;
+      text-decoration:none;
+      border-bottom:none;
+      transition:color 0.2s;
+    }
+
+    /* GOLDEN for premium products */
+    .item-name a.premium {
+      color: #d4af37;
+      text-shadow: 0 1px 0 #000, 0 2px 3px rgba(0,0,0,0.6);
+    }
+
+    .item-name a:hover { color:#a76f4b; }
+    .item-name a.premium:hover { color:#f5d76e; }
+
+    .item-price { font-family:'Cormorant Garamond', serif; font-size:1.7rem; font-weight:600; color:#a76f4b; white-space:nowrap; }
+    .item-desc {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      color: #4a3f30;
+      margin-top: 0.4rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 1.5;
+      max-width: 95%;
+      text-shadow: 0 1px 1px rgba(0,0,0,0.3);
+    }
+    @media(max-width:850px){ .menu-grid{ grid-template-columns:1fr; gap:1.8rem; } .menu-header h1{ font-size:3.6rem; } .section-title{ font-size:2.2rem; } .menu-card{ padding:2rem 1.5rem; } }
+    @media(max-width:500px){ .item-row{ flex-direction:column; align-items:flex-start; gap:0.2rem; } .item-price{ white-space:normal; } .menu-header h1{ font-size:2.8rem; } }
+  </style>
+</head>
+<body>
+<div class="menu-card">
+  <div class="menu-header">
+    <h1>Boissons</h1>
+  </div>
+
+  <div class="menu-grid">
+    <!-- LEFT: wines, champagnes, and light sparkling beverages -->
+    <div class="menu-section">
+      <div class="subsection-title">Vins & Champagnes</div>
+
+      <!-- Sangria Dorada -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a class="premium" target="_blank" rel="noopener">Sangria Dorada</a></span>
+          <span class="item-price">420</span>
+        </div>
+        <div class="item-desc">Citrus-infused white wine layered with golden fruits and a refreshing finish.</div>
+      </div>
+
+      <!-- Cava Royale Spritz -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Cava Royale Spritz</a></span>
+          <span class="item-price">460</span>
+        </div>
+        <div class="item-desc">Sparkling cava brightened with a bittersweet aperitif and subtle orange zest.</div>
+      </div>
+
+      <!-- Imperial Rioja Reserve -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Imperial Rioja Reserve</a></span>
+          <span class="item-price">680 (glass)</span>
+        </div>
+        <div class="item-desc">Aged Rioja with deep oak character and rich dark berry undertones.</div>
+      </div>
+
+      <!-- Bellini d’Oro -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a class="premium" target="_blank" rel="noopener">Bellini d’Oro</a></span>
+          <span class="item-price">450</span>
+        </div>
+        <div class="item-desc">Velvety white peach pureé crowned with fine sparkling wine.</div>
+      </div>
+
+      <!-- Champagne Maison Prestige -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a class="premium" target="_blank" rel="noopener">Champagne Maison Prestige</a></span>
+          <span class="item-price">980 (glass)</span>
+        </div>
+        <div class="item-desc">Elegant French champagne with fine bubbles and brioche notes.</div>
+      </div>
+
+      <!-- Kir Royale Impérial -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a target="_blank" rel="noopener">Kir Royale Impérial</a></span>
+          <span class="item-price">540</span>
+        </div>
+        <div class="item-desc">Champagne elevated with luscious cassis liqueur.</div>
+      </div>
+    </div>
+
+    <!-- RIGHT: cocktails, coffee, sweet specialties -->
+    <div class="menu-section">
+      <div class="subsection-title">Cocktails & Douceurs</div>
+
+      <!-- Negroni Imperiale -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a target="_blank" rel="noopener">Negroni Imperiale</a></span>
+          <span class="item-price">520</span>
+        </div>
+        <div class="item-desc">Refined balance of gin, vermouth, and aromatic bitters.</div>
+      </div>
+
+      <!-- Limoncello Velvet -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a target="_blank" rel="noopener">Limoncello Velvet</a></span>
+          <span class="item-price">390</span>
+        </div>
+        <div class="item-desc">Silky chilled lemon liqueur with vibrant citrus essence.</div>
+      </div>
+
+      <!-- Espresso Reale -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Espresso Reale</a></span>
+          <span class="item-price">210</span>
+        </div>
+        <div class="item-desc">Premium single-origin espresso with a smooth, lingering crema.</div>
+      </div>
+
+      <!-- French 75 Couronne -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">French 75 Couronne</a></span>
+          <span class="item-price">510</span>
+        </div>
+        <div class="item-desc">Gin, fresh lemon, and champagne in a bright, effervescent harmony.</div>
+      </div>
+
+      <!-- Horchata Vanilla Luxe -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Horchata Vanilla Luxe</a></span>
+          <span class="item-price">260</span>
+        </div>
+        <div class="item-desc">Chilled rice and vanilla cream delicately spiced with cinnamon.</div>
+      </div>
+
+      <!-- Chocolat Chaud Parisien -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Chocolat Chaud Parisien</a></span>
+          <span class="item-price">320</span>
+        </div>
+        <div class="item-desc">Rich Parisian hot chocolate, smooth and decadently comforting.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plats Principaux · Porc</title>
+  <!-- Parisienne + Cormorant Garamond -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-image: url("images/back.png");
+      font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      position: relative;
+    }
+
+    /* subtle vignette */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(0,0,0,0.3) 90%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* main card – creamy paper with rich borders */
+    .menu-card {
+      position: relative;
+      z-index: 2;
+      max-width: 1150px;
+      width: 100%;
+      background: #fcf7ef;
+      background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDgwIDgwIj48ZmlsdGVyIGlkPSJmIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc0IiBudW1PY3RhdmVzPSIzIiAvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNmKSIgb3BhY2l0eT0iMC4wMjUiIC8+PC9zdmc+');
+      border-radius: 32px 32px 24px 24px;
+      box-shadow: 0 30px 50px -20px rgba(0,0,0,0.9), 
+                  0 0 0 1px #cfb595 inset,
+                  0 0 0 3px #f0e5d8 inset,
+                  0 0 0 5px #8f7a60 inset;
+      padding: 2.8rem 2.5rem;
+    }
+
+    /* header – Parisienne for "Plats Principaux" */
+    .menu-header {
+      text-align: center;
+      border-bottom: 2px solid #c4a27a;
+      padding-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .menu-header h1 {
+      font-family: 'Parisienne', cursive;
+      font-size: 4.2rem;
+      font-weight: 400;
+      letter-spacing: 1px;
+      color: #4f3f2e;
+      text-shadow: 2px 2px 4px rgba(240, 230, 210, 0.8), 3px 3px 8px rgba(100, 70, 40, 0.2);
+      word-spacing: 4px;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    /* subtitle – Porc · pork (italic, elegant) */
+    .menu-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      color: #7f6a50;
+      text-align: center;
+      font-style: italic;
+      letter-spacing: 1px;
+      margin-top: -0.8rem;
+      margin-bottom: 2.2rem;
+      border-bottom: 1px dashed #d4b38c;
+      padding-bottom: 0.6rem;
+    }
+
+    /* two columns */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.8rem;
+    }
+
+    /* menu item container */
+    .menu-item {
+      margin-bottom: 1.8rem;
+      border-left: 3px solid #d4b38c;
+      padding-left: 1.2rem;
+      transition: transform 0.15s ease;
+    }
+
+    .menu-item:hover {
+      transform: translateX(5px);
+      border-left-color: #b48d62;
+    }
+
+    /* flex row for name + price */
+    .item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+    }
+
+    /* item name link – no underline, subtle hover */
+    .item-name a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #3f3326;
+      letter-spacing: 0.3px;
+      text-decoration: none;
+      border-bottom: none;
+      transition: color 0.2s;
+    }
+
+    .item-name a:hover {
+      color: #a76f4b;
+      border-bottom: none;
+    }
+
+    .item-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: #a76f4b;
+      background: transparent;
+      padding: 0;
+      white-space: nowrap;
+    }
+
+    .item-desc {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      color: #4a3f30;
+      margin-top: 0.4rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 1.5;
+      max-width: 95%;
+      text-shadow: 0 1px 1px rgba(0,0,0,0.3);
+    }
+
+    /* GOLDEN for premium products */
+    .item-name a.premium {
+      color: #d4af37;
+      text-shadow: 0 1px 0 #000, 0 2px 3px rgba(0,0,0,0.6);
+    }
+
+    /* responsive */
+    @media (max-width: 850px) {
+      .menu-grid {
+        grid-template-columns: 1fr;
+        gap: 1.8rem;
+      }
+      .menu-header h1 {
+        font-size: 3.6rem;
+      }
+      .menu-card {
+        padding: 2rem 1.5rem;
+      }
+      .menu-subtitle {
+        font-size: 1.8rem;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .item-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.2rem;
+      }
+      .item-price {
+        white-space: normal;
+      }
+      .menu-header h1 {
+        font-size: 2.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="menu-card">
+  <div class="menu-header">
+    <h1>Plats Principaux</h1>
+  </div>
+  <div class="menu-subtitle">Porc · pork</div>
+
+  <!-- two columns for 12 pork dishes -->
+  <div class="menu-grid">
+    <!-- LEFT COLUMN (first 6 items) -->
+    <div class="menu-column">
+      <!-- Cochinillo Real Asado -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a href="pore/conc.html" class="premium" >Cochinillo Real Asado</a></span>
+          <span class="item-price">1,980</span>
+        </div>
+        <div class="item-desc">Slow-roasted suckling pig with crispy skin and a bright, sweet apple purée.</div>
+      </div>
+
+      <!-- Secreto Ibérico Dorado -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a href="pore/secret.html" class="premium">Secreto Ibérico Dorado</a></span>
+          <span class="item-price">2,150</span>
+        </div>
+        <div class="item-desc">Marbled Iberian pork 'Secreto' grilled and finished with piquant smoked paprika oil.</div>
+      </div>
+
+      <!-- Cerdo al Ferez Imperial -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a target="_blank" rel="noopener">Cerdo al Ferez Imperial</a></span>
+          <span class="item-price">1,420</span>
+        </div>
+        <div class="item-desc">Tender pork medallions simmered in a rich and nutty sherry-infused cream sauce.</div>
+      </div>
+
+      <!-- Costillas Miel de Oro -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Costillas Miel de Oro</a></span>
+          <span class="item-price">1,560</span>
+        </div>
+        <div class="item-desc">Fall-off-the-bone pork ribs slow-roasted in a sticky, golden honey glaze.</div>
+      </div>
+
+      <!-- Porchetta d'Oro -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Porchetta d'Oro</a></span>
+          <span class="item-price">1,880</span>
+        </div>
+        <div class="item-desc">Herb-stuffed roasted pork belly with a perfect balance of tender meat and golden crackling.</div>
+      </div>
+
+      <!-- Maiale al Latte Imperiale -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Maiale al Latte Imperiale</a></span>
+          <span class="item-price">1,390</span>
+        </div>
+        <div class="item-desc">Pork loin braised slowly in milk to achieve a delicate texture.</div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN (last 6 items) -->
+    <div class="menu-column">
+      <!-- Costolette al Barolo -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Costolette al Barolo</a></span>
+          <span class="item-price">1,670</span>
+        </div>
+        <div class="item-desc">Thick-cut pork chops deglazed with a bold Barolo wine sauce.</div>
+      </div>
+
+      <!-- Guanciale Brasato Reale -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Guanciale Brasato Reale</a></span>
+          <span class="item-price">1,540</span>
+        </div>
+        <div class="item-desc">Rich, tenderized pork jowl slow-cooked with aromatic Mediterranean herbs.</div>
+      </div>
+
+      <!-- Porc à la Couronne -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Porc à la Couronne</a></span>
+          <span class="item-price">1,480</span>
+        </div>
+        <div class="item-desc">Seared pork medallions elevated by a sweet and savory caramelized apple glaze.</div>
+      </div>
+
+      <!-- Filet de Porc Dijonnaise -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Filet de Porc Dijonnaise</a></span>
+          <span class="item-price">1,350</span>
+        </div>
+        <div class="item-desc">Lean pork tenderloin served in a zesty, grain-mustard cream sauce.</div>
+      </div>
+
+      <!-- Porc Confit Imperial -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a target="_blank" rel="noopener">Porc Confit Imperial</a></span>
+          <span class="item-price">1,620</span>
+        </div>
+        <div class="item-desc">Rich pork shoulder slow-cooked in its own drippings until perfectly tender.</div>
+      </div>
+
+      <!-- Cassoulet Royale -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a target="_blank" rel="noopener">Cassoulet Royale</a></span>
+          <span class="item-price">1,590</span>
+        </div>
+        <div class="item-desc">Hearty, slow-cooked white bean stew with premium pork cuts and artisanal sausages.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

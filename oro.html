@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entrées · Signature Collection</title>
+  <!-- Parisienne + Cormorant Garamond -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-image: url("images/back.png");
+      font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      position: relative;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(0,0,0,0.3) 90%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .menu-card {
+      position: relative;
+      z-index: 2;
+      max-width: 1150px;
+      width: 100%;
+      background: #fcf7ef;
+      background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDgwIDgwIj48ZmlsdGVyIGlkPSJmIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc0IiBudW1PY3RhdmVzPSIzIiAvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNmKSIgb3BhY2l0eT0iMC4wMjUiIC8+PC9zdmc+');
+      border-radius: 32px 32px 24px 24px;
+      box-shadow: 0 30px 50px -20px rgba(0,0,0,0.9), 
+                  0 0 0 1px #cfb595 inset,
+                  0 0 0 3px #f0e5d8 inset,
+                  0 0 0 5px #8f7a60 inset;
+      padding: 2.8rem 2.5rem;
+    }
+
+    .menu-header {
+      text-align: center;
+      border-bottom: 2px solid #c4a27a;
+      padding-bottom: 1.5rem;
+      margin-bottom: 2.3rem;
+    }
+
+    .menu-header h1 {
+      font-family: 'Parisienne', cursive;
+      font-size: 4.2rem;
+      font-weight: 400;
+      letter-spacing: 1px;
+      color: #4f3f2e;
+      text-shadow: 2px 2px 4px rgba(240, 230, 210, 0.8), 3px 3px 8px rgba(100, 70, 40, 0.2);
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.8rem;
+    }
+
+    .menu-item {
+      margin-bottom: 1.8rem;
+      border-left: 3px solid #d4b38c;
+      padding-left: 1.2rem;
+      transition: transform 0.15s ease;
+    }
+
+    .menu-item:hover {
+      transform: translateX(5px);
+      border-left-color: #b48d62;
+    }
+
+    .item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+    }
+
+    .item-name a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #3f3326;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .item-name a:hover {
+      color: #a76f4b;
+    }
+
+    .item-price {
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: #a76f4b;
+      white-space: nowrap;
+    }
+
+    .item-desc {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      color: #4a3f30;
+      margin-top: 0.4rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 1.5;
+      max-width: 95%;
+      text-shadow: 0 1px 1px rgba(0,0,0,0.3);
+    }
+
+    /* GOLDEN for premium products */
+    .item-name a.premium {
+      color: #d4af37;
+      text-shadow: 0 1px 0 #000, 0 2px 3px rgba(0,0,0,0.6);
+    }
+
+    @media (max-width: 850px) {
+      .menu-grid { grid-template-columns: 1fr; }
+      .menu-header h1 { font-size: 3.6rem; }
+      .menu-card { padding: 2rem 1.5rem; }
+    }
+
+    @media (max-width: 500px) {
+      .item-row { flex-direction: column; align-items: flex-start; gap: 0.2rem; }
+      .item-price { white-space: normal; }
+      .menu-header h1 { font-size: 2.8rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="menu-card">
+  <div class="menu-header">
+    <h1>Entrées</h1>
+  </div>
+
+  <div class="menu-grid">
+    <!-- LEFT COLUMN -->
+    <div class="menu-column">
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a href="oro/orog.html" class="premium" >Oro Gambas al Ajillo</a></span>
+          <span class="item-price">680</span>
+        </div>
+        <div class="item-desc">Sautéed prawns in fragrant garlic oil with a whisper of chili and lemon essence.</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a href="oro/imperial.html">Imperial Jamón Cristal</a></span>
+          <span class="item-price">750</span>
+        </div>
+        <div class="item-desc">Hand-carved Jamón Ibérico atop tomato-brushed cristal bread with abequina pearls.</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a href="oro/trufa.html"  class="premium" >Trufa Manchego Croquetas</a></span>
+          <span class="item-price">620</span>
+        </div>
+        <div class="item-desc">Crisp croquettes of Manchego and truffle béchamel with molten center.</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a href="oro/casa.html">Casa Pulpo Dorado</a></span>
+          <span class="item-price">790</span>
+        </div>
+        <div class="item-desc">Charred octopus with smoked paprika oil and silky citrus-infused purée.</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a href="oro/tartare.html">Tartare di Manzo Reale</a></span>
+          <span class="item-price">820</span>
+        </div>
+        <div class="item-desc">Prime hand-cut beef, capers, shallots, and quail yolk, finished with Parmigiano shard.</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a href="oro/burata.html"  class="premium" >Burrata Imperiale</a></span>
+          <span class="item-price">710</span>
+        </div>
+        <div class="item-desc">Velvety burrata with heirloom tomatoes, basil oil, and aged balsamic pearls.</div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="menu-column">
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a href="oro/capasanta.html">Capasanta al Prosecco</a></span>
+          <span class="item-price">760</span>
+        </div>
+        <div class="item-desc">Seared scallops glazed in Prosecco butter reduction and delicate micro herbs.</div>
+      </div>
+      <!-- ARANCINI – now links to detail page (same tab) -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a href="oro/arancini.html">Arancini di Lusso</a></span>
+          <span class="item-price">590</span>
+        </div>
+        <div class="item-desc">Golden risotto spheres with truffle essence and molten mozzarella heart.</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a href="oro/foie.html"  class="premium" >Foie Gras Couronne</a></span>
+          <span class="item-price">1,150</span>
+        </div>
+        <div class="item-desc">Pan-seared foie gras with brioche toast and fig compote.</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a href="oro/homard.html">Homard Velouté</a></span>
+          <span class="item-price">880</span>
+        </div>
+        <div class="item-desc">Silken lobster velouté enriched with cognac and fresh chive.</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a href="oro/escargot.html">Escargots à l’Impériale</a></span>
+          <span class="item-price">720</span>
+        </div>
+        <div class="item-desc">Burgundy snails bathed in garlic-parsley butter beneath a crisp pastry crown.</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a href="oro/tartine.html">Tartine Royale</a></span>
+          <span class="item-price">640</span>
+        </div>
+        <div class="item-desc">Duck rillette on toasted artisan bread with cornichons and Dijon glaze.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

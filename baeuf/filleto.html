@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Filetto Barolo Corona · Signature Collection</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background-color: #2e241b;
+  background-image: url("../images/back.png");
+  background-size: cover;
+  background-position: center;
+  font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  position: relative;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(0,0,0,0.3) 90%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dish-card {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  width: 100%;
+  background: #fcf7ef;
+  border-radius: 32px 32px 24px 24px;
+  box-shadow: 0 30px 50px -20px rgba(0,0,0,0.9), 
+              0 0 0 1px #cfb595 inset,
+              0 0 0 3px #f0e5d8 inset,
+              0 0 0 5px #8f7a60 inset;
+  padding: 2.8rem 2.5rem;
+}
+
+.dish-header {
+  text-align: center;
+  border-bottom: 2px solid #c4a27a;
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.dish-header h2 {
+  font-family: 'Parisienne', cursive;
+  font-size: 3.8rem;
+  color: #4f3f2e;
+  text-shadow: 2px 2px 4px rgba(240, 230, 210, 0.8);
+  line-height: 1.2;
+}
+
+.dish-image {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.dish-image img {
+  max-width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  border: 3px solid #e8d9c4;
+}
+
+.dish-description {
+  font-size: 1.5rem;
+  color: #3f3326;
+  line-height: 1.6;
+  text-align: center;
+  max-width: 750px;
+  margin: 1.5rem auto;
+  font-weight: 500;
+}
+
+.dish-price {
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #a76f4b;
+  background: #f0e5d8;
+  display: inline-block;
+  padding: 0.5rem 2rem;
+  border-radius: 40px;
+  margin: 1rem 0 2rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.button-wrapper {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.btn-back {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #fcf7ef;
+  background-color: #8f7a60;
+  padding: 0.7rem 2.5rem;
+  border-radius: 50px;
+  text-decoration: none;
+  border: 2px solid #6b4f36;
+  transition: background-color 0.2s, border-color 0.2s;
+  display: inline-block;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.btn-back:hover {
+  background-color: #a76f4b;
+  border-color: #4f3f2e;
+}
+
+@media (max-width: 600px) {
+  .dish-header h2 { font-size: 2.8rem; }
+  .dish-description { font-size: 1.3rem; }
+}
+</style>
+</head>
+
+<body>
+<div class="dish-card">
+
+  <div class="dish-header">
+    <h2>Filetto Barolo Corona</h2>
+  </div>
+
+  <div class="dish-image">
+    <img src="../images/filleto.jpg" alt="Filetto Barolo Corona">
+  </div>
+
+  <div class="dish-description">
+    <p>
+      Tender, prime beef filet, slowly seared to retain its delicate juiciness, then finished with a refined Barolo wine reduction. Served with creamy porcini mushroom risotto, the dish delivers a perfect balance of earthy, aromatic notes and luxurious texture, creating an elegant dining experience worthy of royalty.
+    </p>
+  </div>
+
+  <div style="text-align: center;">
+    <span class="dish-price">2,780</span>
+  </div>
+
+  <div class="button-wrapper">
+    <a href="../baeuf.html" class="btn-back">← Return to Menu</a>
+  </div>
+
+</div>
+</body>
+</html>

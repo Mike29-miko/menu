@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plats Principaux · Fruits de mer</title>
+  <!-- Parisienne for title + Cormorant Garamond for the rest -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-image: url("images/back.png");
+      font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      position: relative;
+    }
+
+    /* subtle vignette */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(0,0,0,0.3) 90%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* main card – creamy paper with rich borders */
+    .menu-card {
+      position: relative;
+      z-index: 2;
+      max-width: 1150px;
+      width: 100%;
+      background: #fcf7ef;
+      background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDgwIDgwIj48ZmlsdGVyIGlkPSJmIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc0IiBudW1PY3RhdmVzPSIzIiAvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNmKSIgb3BhY2l0eT0iMC4wMjUiIC8+PC9zdmc+');
+      border-radius: 32px 32px 24px 24px;
+      box-shadow: 0 30px 50px -20px rgba(0,0,0,0.9), 
+                  0 0 0 1px #cfb595 inset,
+                  0 0 0 3px #f0e5d8 inset,
+                  0 0 0 5px #8f7a60 inset;
+      padding: 2.8rem 2.5rem;
+    }
+
+    /* header – Parisienne */
+    .menu-header {
+      text-align: center;
+      border-bottom: 2px solid #c4a27a;
+      padding-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .menu-header h1 {
+      font-family: 'Parisienne', cursive;
+      font-size: 4.2rem;
+      font-weight: 400;
+      letter-spacing: 1px;
+      color: #4f3f2e;
+      text-shadow: 2px 2px 4px rgba(240, 230, 210, 0.8), 3px 3px 8px rgba(100, 70, 40, 0.2);
+      word-spacing: 4px;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    /* subtitle – Fruits de mer · seafood */
+    .menu-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      color: #7f6a50;
+      text-align: center;
+      font-style: italic;
+      letter-spacing: 1px;
+      margin-top: -0.8rem;
+      margin-bottom: 2.2rem;
+      border-bottom: 1px dashed #d4b38c;
+      padding-bottom: 0.6rem;
+    }
+
+    /* two columns */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.8rem;
+    }
+
+    /* menu item container */
+    .menu-item {
+      margin-bottom: 1.8rem;
+      border-left: 3px solid #d4b38c;
+      padding-left: 1.2rem;
+      transition: transform 0.15s ease;
+    }
+
+    .menu-item:hover {
+      transform: translateX(5px);
+      border-left-color: #b48d62;
+    }
+
+    /* flex row for name + price */
+    .item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+    }
+
+    /* item name link – no underline, subtle hover */
+    .item-name a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #3f3326;
+      letter-spacing: 0.3px;
+      text-decoration: none;
+      border-bottom: none;
+      transition: color 0.2s;
+    }
+
+    .item-name a:hover {
+      color: #a76f4b;
+      border-bottom: none;
+    }
+
+    .item-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: #a76f4b;
+      background: transparent;
+      padding: 0;
+      white-space: nowrap;
+    }
+
+    .item-desc {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      color: #4a3f30;
+      margin-top: 0.4rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 1.5;
+      max-width: 95%;
+      text-shadow: 0 1px 1px rgba(0,0,0,0.3);
+    }
+
+    /* GOLDEN for premium products */
+    .item-name a.premium {
+      color: #d4af37;
+      text-shadow: 0 1px 0 #000, 0 2px 3px rgba(0,0,0,0.6);
+    }
+
+    /* responsive */
+    @media (max-width: 850px) {
+      .menu-grid {
+        grid-template-columns: 1fr;
+        gap: 1.8rem;
+      }
+      .menu-header h1 {
+        font-size: 3.6rem;
+      }
+      .menu-card {
+        padding: 2rem 1.5rem;
+      }
+      .menu-subtitle {
+        font-size: 1.8rem;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .item-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.2rem;
+      }
+      .item-price {
+        white-space: normal;
+      }
+      .menu-header h1 {
+        font-size: 2.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="menu-card">
+  <div class="menu-header">
+    <h1>Plats Principaux</h1>
+  </div>
+  <div class="menu-subtitle">Fruits de mer · seafood</div>
+
+  <div class="menu-grid">
+    <!-- LEFT COLUMN – first 6 seafood dishes -->
+    <div class="menu-column">
+      <!-- Zarzuela Imperial -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a href="fruit/polo.html" class="premium">Zarzuela Imperial</a></span>
+          <span class="item-price">2,480</span>
+        </div>
+        <div class="item-desc">Luxurious seafood stew of lobster, mussels, and fish in saffron broth.</div>
+      </div>
+
+      <!-- Langosta a la Casa -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Langosta a la Casa</a></span>
+          <span class="item-price">3,100</span>
+        </div>
+        <div class="item-desc">Char-grilled lobster finished with aromatic garlic beurre.</div>
+      </div>
+
+      <!-- Bacalao Vizcaína Dorado -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a target="_blank" rel="noopener">Bacalao Vizcaína Dorado</a></span>
+          <span class="item-price">1,780</span>
+        </div>
+        <div class="item-desc">Premium cod loin in slow-simmered roasted red pepper velouté.</div>
+      </div>
+
+      <!-- Gambas Plancha Reale -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Gambas Plancha Reale</a></span>
+          <span class="item-price">1,690</span>
+        </div>
+        <div class="item-desc">Jumbo prawns seared a la plancha with extra virgin olive oil.</div>
+      </div>
+
+      <!-- Branzino al Limone Imperiale -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Branzino al Limone Imperiale</a></span>
+          <span class="item-price">1,950</span>
+        </div>
+        <div class="item-desc">Mediterranean seabass in delicate lemon beurre blanc.</div>
+      </div>
+
+      <!-- Astice Risotto Corona -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Astice Risotto Corona</a></span>
+          <span class="item-price">2,760</span>
+        </div>
+        <div class="item-desc">Creamy saffron risotto crowned with butter-poached lobster.</div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN – last 6 seafood dishes -->
+    <div class="menu-column">
+      <!-- Frutti di Mare Royale -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Frutti di Mare Royale</a></span>
+          <span class="item-price">1,880</span>
+        </div>
+        <div class="item-desc">Handcrafted pasta with seasonal seafood in white wine reduction.</div>
+      </div>
+
+      <!-- Tonno Scottato d’Oro -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Tonno Scottato d’Oro</a></span>
+          <span class="item-price">1,720</span>
+        </div>
+        <div class="item-desc">Sesame-crusted tuna, expertly seared with a tender ruby center.</div>
+      </div>
+
+      <!-- Bouillabaisse Royale -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a target="_blank" rel="noopener">Bouillabaisse Royale</a></span>
+          <span class="item-price">2,350</span>
+        </div>
+        <div class="item-desc">Classic Provençal seafood stew enriched with herbs and saffron essence.</div>
+      </div>
+
+      <!-- Homard Thermidor Impérial -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a href=""  class="premium" target="_blank" rel="noopener">Homard Thermidor Impérial</a></span>
+          <span class="item-price">3,280</span>
+        </div>
+        <div class="item-desc">Lobster baked in cognac cream, finished with golden gratin.</div>
+      </div>
+
+      <!-- Saumon Beurre Blanc -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Saumon Beurre Blanc</a></span>
+          <span class="item-price">1,980</span>
+        </div>
+        <div class="item-desc">Pan-seared salmon with silky white wine butter emulsion.</div>
+      </div>
+
+      <!-- Saint-Jacques Truffé -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Saint-Jacques Truffé</a></span>
+          <span class="item-price">2,640</span>
+        </div>
+        <div class="item-desc">Seared scallops paired with velvety truffle purée.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

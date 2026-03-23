@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>aesthetic flip book · portrait album</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #2b2b26;
+            background-image: radial-gradient(circle at 30% 40%, #4a4036 0%, #1f1e1a 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+            padding: 0.8rem;
+            margin: 0;
+            animation: fadeInBody 1.2s ease;
+        }
+
+        @keyframes fadeInBody {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .book-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 800px;
+            padding: 0 0.5rem;
+        }
+
+        .book {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1240 / 1748;
+            perspective: 2800px;
+            box-shadow: 
+                0 20px 35px -8px rgba(0,0,0,0.7),
+                0 0 0 1px #cfb595 inset,
+                0 0 0 2px #8f7a60 inset;
+            border-radius: 6px 20px 20px 6px;
+            background: #dbcbb8;
+            transition: box-shadow 0.3s;
+        }
+
+        .book:hover {
+            box-shadow: 
+                0 25px 45px -8px #000000cc,
+                0 0 0 1px #e7cfb0 inset,
+                0 0 0 2px #a58d71 inset;
+        }
+
+        .page-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.85s cubic-bezier(0.23, 1, 0.32, 1);
+            border-radius: 6px 20px 20px 6px;
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-origin: left center;
+            transform-style: preserve-3d;
+            border-radius: 6px 20px 20px 6px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.4);
+            transition: transform 0.85s cubic-bezier(0.23, 1, 0.32, 1);
+            pointer-events: auto;
+            cursor: pointer;
+        }
+
+        .page-front, .page-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 6px 20px 20px 6px;
+            overflow: hidden;
+            background: #1f1b16;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.3);
+        }
+
+        .page-front {
+            transform: rotateY(0deg);
+        }
+
+        .page-back {
+            transform: rotateY(180deg);
+        }
+
+        .page img, .page iframe {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border: none;
+        }
+
+        .page iframe {
+            object-fit: fill;  /* iframe should fill the space */
+            background: white;  /* fallback */
+        }
+
+        .page:hover img {
+            filter: brightness(1.02) contrast(1.04);
+        }
+
+        /* decorative spine */
+        .book::before {
+            content: '';
+            position: absolute;
+            top: 8px; left: -12px;
+            width: 22px; height: calc(100% - 16px);
+            background: linear-gradient(145deg, #8b775b, #5f4f3a);
+            border-radius: 8px 0 0 8px;
+            box-shadow: 
+                inset -4px 0 6px #32281d,
+                2px 0 5px rgba(0,0,0,0.5);
+            z-index: 15;
+        }
+
+        .page-container::after {
+            content: '';
+            position: absolute;
+            top: 2%; right: 2%;
+            width: 12px; height: 96%;
+            background: radial-gradient(ellipse at left, rgba(0,0,0,0.2) 0%, transparent 80%);
+            transform: rotate(2deg);
+            pointer-events: none;
+            z-index: 20;
+            opacity: 0.7;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .controls {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        button {
+            background: #b2906b;
+            border: none;
+            color: #fcf3e6;
+            padding: 0.9rem 2.2rem;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            font-family: 'Cormorant Garamond', serif;
+            cursor: pointer;
+            box-shadow: 0 8px 12px -6px #1e1710,
+                        0 0 0 1px #e7cfb0 inset;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(4px);
+            min-width: 150px;
+        }
+
+        button:not(:disabled):hover {
+            background: #c9a882;
+            transform: scale(1.02);
+            box-shadow: 0 12px 16px -8px #0f0c08,
+                        0 0 0 1px #f5e1c1 inset;
+            color: #ffffff;
+        }
+
+        button:not(:disabled):active {
+            transform: scale(0.98);
+            box-shadow: 0 4px 8px -2px #0f0c08;
+        }
+
+        button:disabled {
+            opacity: 0.3;
+            cursor: default;
+            filter: grayscale(0.6);
+            background: #796b5c;
+            box-shadow: none;
+        }
+
+        .page-indicator {
+            color: #e7d9c5;
+            font-size: 1.3rem;
+            margin-top: 1.2rem;
+            font-weight: 400;
+            text-shadow: 2px 2px 2px #1f1b16;
+            background: rgba(40, 30, 20, 0.4);
+            backdrop-filter: blur(4px);
+            padding: 0.3rem 2rem;
+            border-radius: 60px;
+            border: 1px solid #af9a80;
+            letter-spacing: 1px;
+        }
+
+        .error-note {
+            color: #fdd7b0;
+            margin-top: 1rem;
+            font-size: 1rem;
+            background: #332e27b3;
+            padding: 0.4rem 1.2rem;
+            border-radius: 30px;
+            backdrop-filter: blur(4px);
+        }
+
+        .book {
+            animation: bookAppear 0.9s ease-out;
+        }
+
+        @keyframes bookAppear {
+            0% { opacity: 0; transform: translateY(20px) scale(0.98); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @media (max-width: 520px) {
+            .controls {
+                gap: 0.8rem;
+                flex-direction: column;
+                width: 100%;
+                align-items: center;
+            }
+            button {
+                width: 80%;
+                padding: 0.8rem 1rem;
+                font-size: 1.2rem;
+            }
+            .page-indicator {
+                font-size: 1.1rem;
+                padding: 0.3rem 1.5rem;
+            }
+            .book-wrapper {
+                max-width: 98%;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .book {
+                aspect-ratio: 1240 / 1748;
+            }
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="book-wrapper">
+    <div class="book" id="book">
+        <!-- pages injected by javascript -->
+    </div>
+
+    <div class="controls">
+        <button id="prevBtn" disabled>◀ PREVIOUS</button>
+        <button id="nextBtn" disabled>NEXT ▶</button>
+    </div>
+
+    <div class="page-indicator" id="indicator">–</div>
+    <div class="error-note" id="errorMsg"></div>
+</div>
+
+<script>
+    (function() {
+        // ----- Define pages: first image, second HTML file (boisons.html) -----
+        const pages = [
+            "images/main.png",      
+            "boisons.html",
+            "plats.html", 
+            "sangria.html",
+            "oro.html",
+            "baeuf.html",
+            "pore.html",
+            "paoulet.html",
+            "fruits.html",
+            "desserts.html",
+            "images/end.png"
+        ];
+
+        const bookEl = document.getElementById('book');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const indicator = document.getElementById('indicator');
+        const errorMsg = document.getElementById('errorMsg');
+
+        let currentPage = 0;
+        let pageElements = [];
+
+        // Helper to detect if a path is an HTML file
+        function isHtmlFile(path) {
+            return path.toLowerCase().endsWith('.html') || path.toLowerCase().endsWith('.htm');
+        }
+
+        function buildBook() {
+            bookEl.innerHTML = '';
+            pageElements = [];
+
+            if (pages.length === 0) {
+                errorMsg.innerText = '📷 no pages to display. add some paths.';
+                return;
+            }
+
+            pages.forEach((src, index) => {
+                const pageContainer = document.createElement('div');
+                pageContainer.className = 'page-container';
+                pageContainer.style.zIndex = pages.length - index;
+                pageContainer.style.transform = `rotateY(0deg)`;
+
+                const page = document.createElement('div');
+                page.className = 'page';
+                page.setAttribute('data-page', index);
+
+                // front side
+                const front = document.createElement('div');
+                front.className = 'page-front';
+
+                // back side (same content for simplicity)
+                const back = document.createElement('div');
+                back.className = 'page-back';
+
+                if (isHtmlFile(src)) {
+                    // HTML page: use iframe
+                    const iframeFront = document.createElement('iframe');
+                    iframeFront.src = src;
+                    iframeFront.title = `page ${index+1}`;
+                    iframeFront.setAttribute('frameborder', '0');
+                    iframeFront.setAttribute('allowfullscreen', 'true');
+                    iframeFront.style.background = '#faf3e8'; // paper color
+                    iframeFront.onerror = () => {
+                        iframeFront.style.background = '#332e27';
+                        iframeFront.style.display = 'flex';
+                        iframeFront.style.alignItems = 'center';
+                        iframeFront.style.justifyContent = 'center';
+                        iframeFront.contentDocument?.write('Failed to load content');
+                    };
+                    front.appendChild(iframeFront);
+
+                    const iframeBack = document.createElement('iframe');
+                    iframeBack.src = src;
+                    iframeBack.title = `page ${index+1} back`;
+                    iframeBack.setAttribute('frameborder', '0');
+                    iframeBack.setAttribute('allowfullscreen', 'true');
+                    iframeBack.style.background = '#faf3e8';
+                    iframeBack.onerror = () => { /* similar fallback */ };
+                    back.appendChild(iframeBack);
+                } else {
+                    // Image page
+                    const imgFront = document.createElement('img');
+                    imgFront.src = src;
+                    imgFront.alt = `page ${index+1}`;
+                    imgFront.onerror = () => { imgFront.style.background = '#332e27'; imgFront.alt = ' missing '; };
+                    front.appendChild(imgFront);
+
+                    const imgBack = document.createElement('img');
+                    imgBack.src = src;
+                    imgBack.alt = `page ${index+1} back`;
+                    imgBack.onerror = () => { imgBack.style.background = '#332e27'; imgBack.alt = ' missing '; };
+                    back.appendChild(imgBack);
+                }
+
+                page.appendChild(front);
+                page.appendChild(back);
+                pageContainer.appendChild(page);
+                bookEl.appendChild(pageContainer);
+
+                pageElements.push({
+                    container: pageContainer,
+                    page: page,
+                    front: front,
+                    back: back
+                });
+
+                // Click on page turns it (only works if not clicking inside iframe)
+                page.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const pageIndex = parseInt(page.getAttribute('data-page'));
+                    if (pageIndex === currentPage) {
+                        turnToNext();
+                    }
+                });
+            });
+
+            updatePages();
+            updateButtons();
+
+        }
+
+        function turnToNext() {
+            if (currentPage < pages.length - 1) {
+                const pageObj = pageElements[currentPage];
+                pageObj.container.style.transform = 'rotateY(-180deg)';
+                setTimeout(() => {
+                    pageObj.container.style.zIndex = 0;
+                }, 450);
+                currentPage++;
+                updatePages();
+                updateButtons();
+            }
+        }
+
+        function turnToPrev() {
+            if (currentPage > 0) {
+                currentPage--;
+                const pageObj = pageElements[currentPage];
+                pageObj.container.style.zIndex = pages.length;
+                pageObj.container.style.transform = 'rotateY(0deg)';
+                updatePages();
+                updateButtons();
+            }
+        }
+
+        function updatePages() {
+            pageElements.forEach((p, idx) => {
+                if (idx > currentPage) {
+                    p.container.style.zIndex = pages.length - idx;
+                } else if (idx === currentPage) {
+                    p.container.style.zIndex = pages.length;
+                } else {
+                    p.container.style.zIndex = 0;
+                }
+            });
+            indicator.innerText = `📖 ${currentPage+1} / ${pages.length}`;
+        }
+
+        function updateButtons() {
+            prevBtn.disabled = currentPage === 0;
+            nextBtn.disabled = currentPage === pages.length - 1;
+        }
+
+        // attach button listeners
+        nextBtn.addEventListener('click', turnToNext);
+        prevBtn.addEventListener('click', turnToPrev);
+
+        // build the book
+        buildBook();
+
+        // swipe detection for mobile
+        let touchstartX = 0;
+        bookEl.addEventListener('touchstart', (e) => {
+            touchstartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        bookEl.addEventListener('touchend', (e) => {
+            const touchendX = e.changedTouches[0].screenX;
+            const diff = touchendX - touchstartX;
+            if (Math.abs(diff) > 40) {
+                if (diff < 0 && currentPage < pages.length - 1) {
+                    turnToNext();    // swipe left → next
+                } else if (diff > 0 && currentPage > 0) {
+                    turnToPrev();    // swipe right → previous
+                }
+            }
+        }, { passive: true });
+    })();
+</script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desserts · sweet specialties</title>
+  <!-- Parisienne + Cormorant Garamond (reference style) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-image: url("images/back.png");
+      font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      position: relative;
+    }
+
+    /* subtle vignette */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(0,0,0,0.3) 90%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* main card – creamy paper with rich borders */
+    .menu-card {
+      position: relative;
+      z-index: 2;
+      max-width: 1150px;
+      width: 100%;
+      background: #fcf7ef;
+      background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDgwIDgwIj48ZmlsdGVyIGlkPSJmIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc0IiBudW1PY3RhdmVzPSIzIiAvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNmKSIgb3BhY2l0eT0iMC4wMjUiIC8+PC9zdmc+');
+      border-radius: 32px 32px 24px 24px;
+      box-shadow: 0 30px 50px -20px rgba(0,0,0,0.9), 
+                  0 0 0 1px #cfb595 inset,
+                  0 0 0 3px #f0e5d8 inset,
+                  0 0 0 5px #8f7a60 inset;
+      padding: 2.8rem 2.5rem;
+    }
+
+    /* header – Parisienne */
+    .menu-header {
+      text-align: center;
+      border-bottom: 2px solid #c4a27a;
+      padding-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .menu-header h1 {
+      font-family: 'Parisienne', cursive;
+      font-size: 4.2rem;
+      font-weight: 400;
+      letter-spacing: 1px;
+      color: #4f3f2e;
+      text-shadow: 2px 2px 4px rgba(240, 230, 210, 0.8), 3px 3px 8px rgba(100, 70, 40, 0.2);
+      word-spacing: 4px;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    /* subtitle – sweet specialties (italic, dashed border) */
+    .menu-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      color: #7f6a50;
+      text-align: center;
+      font-style: italic;
+      letter-spacing: 1px;
+      margin-top: -0.8rem;
+      margin-bottom: 2.2rem;
+      border-bottom: 1px dashed #d4b38c;
+      padding-bottom: 0.6rem;
+    }
+
+    /* two columns for items */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.8rem;
+    }
+
+    /* menu item container */
+    .menu-item {
+      margin-bottom: 1.8rem;
+      border-left: 3px solid #d4b38c;
+      padding-left: 1.2rem;
+      transition: transform 0.15s ease;
+    }
+
+    .menu-item:hover {
+      transform: translateX(5px);
+      border-left-color: #b48d62;
+    }
+
+    /* flex row for name + price */
+    .item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+    }
+
+    /* dish name links – no underline */
+    .item-name a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #3f3326;
+      letter-spacing: 0.3px;
+      text-decoration: none;
+      border-bottom: none;
+      transition: color 0.2s;
+    }
+
+    .item-name a:hover {
+      color: #a76f4b;
+      border-bottom: none;
+    }
+
+    .item-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: #a76f4b;
+      background: transparent;
+      padding: 0;
+      white-space: nowrap;
+    }
+
+    .item-desc {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      color: #4a3f30;
+      margin-top: 0.4rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 1.5;
+      max-width: 95%;
+      text-shadow: 0 1px 1px rgba(0,0,0,0.3);
+    }
+
+    /* GOLDEN for premium products */
+    .item-name a.premium {
+      color: #d4af37;
+      text-shadow: 0 1px 0 #000, 0 2px 3px rgba(0,0,0,0.6);
+    }
+
+    /* responsive */
+    @media (max-width: 850px) {
+      .menu-grid {
+        grid-template-columns: 1fr;
+        gap: 1.8rem;
+      }
+      .menu-header h1 {
+        font-size: 3.6rem;
+      }
+      .menu-card {
+        padding: 2rem 1.5rem;
+      }
+      .menu-subtitle {
+        font-size: 1.8rem;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .item-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.2rem;
+      }
+      .item-price {
+        white-space: normal;
+      }
+      .menu-header h1 {
+        font-size: 2.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="menu-card">
+  <div class="menu-header">
+    <h1>Desserts</h1>
+  </div>
+
+  <!-- subtitle exactly like reference (dashed border, italic, centered) -->
+  <div class="menu-subtitle">sweet specialties</div>
+
+  <!-- two columns for 12 desserts -->
+  <div class="menu-grid">
+    <!-- LEFT COLUMN (first 6 items) -->
+    <div class="menu-column">
+      <!-- Flan de Oro -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Flan de Oro</a></span>
+          <span class="item-price">420</span>
+        </div>
+        <div class="item-desc">Silken caramel custard crowned with molten amber glaze.</div>
+      </div>
+
+      <!-- Churros Corona -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  class="premium" target="_blank" rel="noopener">Churros Corona</a></span>
+          <span class="item-price">380</span>
+        </div>
+        <div class="item-desc">Crisp fried choux pastry dusted with cinnamon sugar, served with dark chocolate ganache.</div>
+      </div>
+
+      <!-- Tarta Santiago Reale -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Tarta Santiago Reale</a></span>
+          <span class="item-price">460</span>
+        </div>
+        <div class="item-desc">Moist almond gâteau delicately perfumed with citrus and royal sugar dust.</div>
+      </div>
+
+      <!-- Crema Catalana Brûlée -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Crema Catalana Brûlée</a></span>
+          <span class="item-price">440</span>
+        </div>
+        <div class="item-desc">Citrus-infused custard beneath a glassy torched caramel crust.</div>
+      </div>
+
+      <!-- Tiramisu Imperiale -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  class="premium" target="_blank" rel="noopener">Tiramisu Imperiale</a></span>
+          <span class="item-price">480</span>
+        </div>
+        <div class="item-desc">Espresso-soaked ladyfingers layered with mascarpone cream and cocoa veil.</div>
+      </div>
+
+      <!-- Panna Cotta d’Oro -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Panna Cotta d’Oro</a></span>
+          <span class="item-price">450</span>
+        </div>
+        <div class="item-desc">Vanilla bean cream set to perfection, finished with berry coulis.</div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN (last 6 items) -->
+    <div class="menu-column">
+      <!-- Cannoli Royale -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a target="_blank" rel="noopener">Cannoli Royale</a></span>
+          <span class="item-price">430</span>
+        </div>
+        <div class="item-desc">Crisp pastry cylinders filled with sweetened ricotta and subtle zest.</div>
+      </div>
+
+      <!-- Semifreddo al Cioccolato -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Semifreddo al Cioccolato</a></span>
+          <span class="item-price">470</span>
+        </div>
+        <div class="item-desc">Air-light frozen chocolate mousse with deep cocoa notes.</div>
+      </div>
+
+      <!-- Crème Brûlée Versailles -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Crème Brûlée Versailles</a></span>
+          <span class="item-price">490</span>
+        </div>
+        <div class="item-desc">Classic Tahitian vanilla custard with a delicately crackled brûlée top.</div>
+      </div>
+
+      <!-- Opéra d’Impériale -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Opéra d’Impériale</a></span>
+          <span class="item-price">520</span>
+        </div>
+        <div class="item-desc">Layered almond sponge with espresso buttercream and dark chocolate ganache.</div>
+      </div>
+
+      <!-- Soufflé Grand Marnier -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  target="_blank" rel="noopener">Soufflé Grand Marnier</a></span>
+          <span class="item-price">510</span>
+        </div>
+        <div class="item-desc">Cloud-light orange liqueur soufflé, baked to airy perfection.</div>
+      </div>
+
+      <!-- Macarons Couronne -->
+      <div class="menu-item">
+        <div class="item-row">
+          <span class="item-name"><a  class="premium" target="_blank" rel="noopener">Macarons Couronne</a></span>
+          <span class="item-price">540</span>
+        </div>
+        <div class="item-desc">Assorted French almond shells with refined, delicate fillings.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
